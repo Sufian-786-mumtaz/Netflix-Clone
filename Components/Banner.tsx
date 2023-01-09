@@ -11,7 +11,7 @@ interface props {
 const Banner = ({netflixOriginal}:props) => {
   const [Movie, setMovie] = useState<Movie | null>(null);
   const dispatch = useDispatch()
-  const handleViedo = (Movie) =>{
+  const handleViedo = (Movie:Movie) =>{
     dispatch(showModal())
     dispatch(addMovie(Movie))
   }

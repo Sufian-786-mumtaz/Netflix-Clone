@@ -6,9 +6,9 @@ import { addMovie } from "../Store/modalSlice";
 interface props {
     movie: Movie;
 }
-const Thumbnail = ({movie}:props) => {
+const Thumbnail = ({movie}:any) => {
   const dispatch = useDispatch()
-  const handleModal = (movie) =>{
+  const handleModal = (movie:props) =>{
     dispatch(showModal())
     dispatch(addMovie(movie))
   }

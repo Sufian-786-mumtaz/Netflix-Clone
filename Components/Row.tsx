@@ -2,7 +2,6 @@ import { useRef, useState } from "react";
 import {FaAngleLeft,FaAngleRight} from "react-icons/fa"
 import {Movie} from "../typing"
 import Thumbnail from "./Thumbnail"
-import { showModal } from "../Store/modalSlice";
 interface props {
     title:string;
     Movie: Movie[],

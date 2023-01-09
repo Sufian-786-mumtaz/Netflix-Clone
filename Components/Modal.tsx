@@ -14,7 +14,7 @@ import {FiThumbsUp} from "react-icons/fi"
 import {HiVolumeUp,HiVolumeOff} from "react-icons/hi"
 const Modal = () => {
   let showModal = useSelector((state: RootState) => state.modal.Modal)
-  const getMovie = useSelector((state: RootState) => state.modal.movie)
+  const getMovie:any = useSelector((state: RootState) => state.modal.movie)
   const [movie, setMovie] = useState<Movie>(getMovie)
   const [trailer, setTrailer] = useState("")
   const [genre, setGenre] = useState<Genre[]>([])
