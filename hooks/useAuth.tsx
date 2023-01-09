@@ -28,7 +28,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const [user, setUser] = useState<User | null>(null)
     const [error, setError] = useState(null)
     const router = useRouter()
-    console.log(User);
     
     
     useEffect(() => {
