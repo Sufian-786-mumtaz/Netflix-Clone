@@ -1,0 +1,43 @@
+{
+  "name": "netflixclone",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@heroicons/react": "^1.0.6",
+    "@mui/material": "^5.11.3",
+    "@reduxjs/toolkit": "^1.9.1",
+    "@types/node": "18.11.9",
+    "@types/react": "18.0.25",
+    "@types/react-dom": "18.0.8",
+    "eslint": "8.27.0",
+    "eslint-config-next": "^13.1.1",
+    "eslint-plugin-react-hooks": "^5.0.0-next-de7d1c907-20221223",
+    "firebase": "^9.15.0",
+    "js-cookie": "^3.0.1",
+    "next": "13.0.2",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.41.3",
+    "react-icons": "^4.6.0",
+    "react-player": "^2.11.0",
+    "react-redux": "^8.0.5",
+    "tailwind-scrollbar-hide": "^1.1.7",
+    "typescript": "4.8.4"
+  },
+  "devDependencies": {
+    "@types/js-cookie": "^3.0.2",
+    "autoprefixer": "^10.4.13",
+    "postcss": "^8.4.18",
+    "tailwind-scrollbar": "^2.0.1",
+    "tailwindcss": "^3.2.3",
+    "tailwindcss-textshadow": "^2.1.3"
+  }
+}
