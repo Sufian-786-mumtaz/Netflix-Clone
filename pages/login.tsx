@@ -1,22 +1,29 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Head from "next/head"
 import Image from "next/image"
 import {useState} from "react"
 import { useForm } from "react-hook-form"
 import { SubmitHandler } from "react-hook-form/dist/types"
 import useAuth from "../hooks/useAuth"
-import Cookies from "js-cookie"
+import Stripe from "stripe"
+import { loginUser } from "../Store/modalSlice"
+import { useDispatch } from "react-redux"
 interface Input  {
   email: string,
   password: string,
 }
-const Login = () => {
+const Login = ({products}:any) => {
+  const dispatch  = useDispatch()
+  console.log(products);
   const [login, setLogin] = useState(false)
   const {signIn, signUp} = useAuth()
-  const {register, handleSubmit, watch, formState: {errors}, } = useForm<Input>()
+  const {register, handleSubmit, formState: {errors}, } = useForm<Input>()
   const onSubmit:SubmitHandler<Input> = async({email, password}) =>{
     if(login){
       // Cookies.set("session", login)
       await signIn(email, password)
+      dispatch(loginUser({email:email, password: password}))
+
     }else{
       await signUp(email, password)
     }
@@ -60,5 +67,16 @@ const Login = () => {
     </div>
   )
 }
-
+export const getServerSideProps = async() =>{
+  const stripe = new Stripe(process.env.Stirpe_Secret_Key)
+  const data = await stripe.products.list({
+    limit:3
+  })
+  console.log(JSON.stringify(data))
+  return{
+    props:{
+      products:data
+    }
+  }
+}
 export default Login

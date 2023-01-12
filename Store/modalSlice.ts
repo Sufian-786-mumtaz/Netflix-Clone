@@ -2,7 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     Modal: false,
-    movie: {}
+    movie: {},
+    subsciption:false,
+    user:{},
 }
 
 const ModalSlice = createSlice({
@@ -17,8 +19,18 @@ const ModalSlice = createSlice({
         },
         addMovie: (state, action) => {
             state.movie = action.payload
-        }
+        },
+        setSubscription: (state) =>{
+            if(state.user === null){
+                state.subsciption = false
+            }else{
+                state.subsciption = true
+            }
+        },
+        loginUser: (state, action) =>{
+            state.user = action.payload
+        },
     }
 })
-export const {showModal,hideModal,addMovie} = ModalSlice.actions
+export const {showModal,hideModal,addMovie,setSubscription,loginUser} = ModalSlice.actions
 export default ModalSlice.reducer

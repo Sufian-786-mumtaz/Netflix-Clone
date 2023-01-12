@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, User } from "firebase/auth";
 import { useState, useEffect, useMemo, createContext, useContext } from "react";
 import { useRouter } from "next/router";
@@ -32,7 +33,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
-            console.log(auth);
             if (user) {
                 setUser(user)
                 setLoading(false)

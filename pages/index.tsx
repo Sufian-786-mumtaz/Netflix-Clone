@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from '../Store/store'
 import useAuth from "../hooks/useAuth"
 import Plans from '../Components/Plans'
+import Stripe from 'stripe'
 interface props{
   netflixOriginal: Movie[]
   trendingNow: Movie[]
@@ -27,13 +28,13 @@ const Home = ({
   comedyMovies,
   horrorMovies,
   romanceMovies,
-  documentaries}:props) => {
+  documentaries,
+  products}:props) => {  
     const {loading} = useAuth()
     const showModal = useSelector((state:RootState) => state.modal.Modal)
-    
-    const subscription = false
+    const subscription = true
     if(loading || subscription ===null) return null
-    if(!subscription) return <Plans />
+    if(!subscription) return <Plans products={products}/>
   return (
     <div className={`h-screen relative bg-gradient-to-b lg:h-[140vh] ${showModal && "!h-screen overflow-hidden"}`}>
       <Head>
@@ -78,6 +79,10 @@ export const getServerSideProps = async () => {
       fetch(requests.fetchRomanceMovies).then((res)=>res.json()),
       fetch(requests.fetchDocumentaries).then((res)=>res.json()),
     ])
+    const stripe = new Stripe(process.env.Stirpe_Secret_Key)
+    const data = await stripe.products.list({
+      limit:3
+    })
     return{
       props:{
         netflixOriginal: netflixOriginal.results,
@@ -88,6 +93,7 @@ export const getServerSideProps = async () => {
         horrorMovies: horrorMovies.results,
         romanceMovies: romanceMovies.results,
         documentaries: documentaries.results,
+        products:data,
       },
     }
 }

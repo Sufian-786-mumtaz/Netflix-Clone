@@ -4,15 +4,25 @@ import useAuth from "../hooks/useAuth"
 import {AiOutlineCheck} from "react-icons/ai"
 import Table from "./Table"
 import {useState} from "react"
-const Plans = () => {
+import { setSubscription } from "../Store/modalSlice"
+import { useDispatch, useSelector } from "react-redux"
+import { RootState } from "../Store/store"
+import Loader from "./Loader"
+const Plans = ({products}:any) => {
+    const dispatch = useDispatch()
     const {logout} = useAuth()
-    const [selectedPlan, setSelectedPlan] = useState<number>(1)
+    const [selectedPlan, setSelectedPlan] = useState(products.data[2])
+    console.log(selectedPlan)
     const [isBillingLoading, setIsBillingLoading] = useState(false)
+    console.log(products);
+    
     console.log(selectedPlan);
     const handleLogout = () =>{
-      localStorage.removeItem("session")
       logout()
-
+    }
+    const handleSubscription = () =>{
+      setIsBillingLoading(true)
+      dispatch(setSubscription())
     }
     
   return (
@@ -46,16 +56,25 @@ const Plans = () => {
         </ul>
         <div className="flex flex-col mt-4 space-y-4">
           <div className="flex w-full items-center self-end justify-end md:w-[60%]">
-            <div className={`planBox ${selectedPlan === 3 ? "opacity-100": "opacity-60"}`}
-            onClick={()=>setSelectedPlan(3)}>Basic</div>
-            <div className={`planBox ${selectedPlan === 2 ? "opacity-100": "opacity-60"}`}
-            onClick={()=>setSelectedPlan(2)}>Standard</div>
-            <div className={`planBox ${selectedPlan === 1 ? "opacity-100": "opacity-60"}`}
-            onClick={()=>setSelectedPlan(1)}>Premium</div>
+            {products.data.map((product:any) =>{
+              return(
+                <div key={product.id} className={`planBox ${selectedPlan?.id === product.id ? "opacity-100": "opacity-60"}`}
+                onClick={()=>setSelectedPlan(product)}>{product.name}</div>
+              )
+            })}
           </div>
-          <Table selectedPlan={selectedPlan} />
+          <Table products={products} selectedPlan={selectedPlan} />
           <button className={`bg-[#e50914] mx-auto w-11/12 rounded py-4
-           text-xl shadow md:w-[420px] hover:bg-[#f6121d] ${isBillingLoading && "opacity-60"}`} disabled={isBillingLoading}>Subscribe</button>
+           text-xl shadow md:w-[420px] hover:bg-[#f6121d]`}
+            disabled={!selectedPlan || isBillingLoading} onClick={()=>handleSubscription()}>
+              {
+                isBillingLoading ? (
+                  <Loader color="dark:fill-gray-300" />
+                ):(
+                  "Subscribe"
+                )
+              }
+              </button>
         </div>
       </main>
     </div>
