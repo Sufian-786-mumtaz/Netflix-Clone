@@ -29,7 +29,7 @@ const Home = ({
   horrorMovies,
   romanceMovies,
   documentaries,
-  products}:props) => {  
+  products}:any) => {  
     const {loading} = useAuth()
     const showModal = useSelector((state:RootState) => state.modal.Modal)
     const subscription = true

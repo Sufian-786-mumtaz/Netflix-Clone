@@ -6,7 +6,6 @@ import Table from "./Table"
 import {useState} from "react"
 import { setSubscription } from "../Store/modalSlice"
 import { useDispatch, useSelector } from "react-redux"
-import { RootState } from "../Store/store"
 import Loader from "./Loader"
 const Plans = ({products}:any) => {
     const dispatch = useDispatch()
