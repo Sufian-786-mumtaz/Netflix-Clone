@@ -7,21 +7,33 @@ import {useState} from "react"
 import { setSubscription } from "../Store/modalSlice"
 import { useDispatch, useSelector } from "react-redux"
 import Loader from "./Loader"
+import { useRouter } from "next/router"
 const Plans = ({products}:any) => {
     const dispatch = useDispatch()
     const {logout} = useAuth()
+    const router = useRouter()
     const [selectedPlan, setSelectedPlan] = useState(products.data[2])
-    console.log(selectedPlan)
     const [isBillingLoading, setIsBillingLoading] = useState(false)
-    console.log(products);
-    
     console.log(selectedPlan);
+    
     const handleLogout = () =>{
       logout()
     }
-    const handleSubscription = () =>{
+    const handleSubscription = async() =>{
       setIsBillingLoading(true)
-      dispatch(setSubscription())
+      const response = await fetch("api/Stripe",{
+        method:"POST",
+        headers:{
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          index: Number(selectedPlan.description) 
+        })
+      });
+      if (response.status === 500) return
+        const data = await response.json()
+        router.push(data.url)
+        setIsBillingLoading(false)
     }
     
   return (
@@ -65,7 +77,7 @@ const Plans = ({products}:any) => {
           <Table products={products} selectedPlan={selectedPlan} />
           <button className={`bg-[#e50914] mx-auto w-11/12 rounded py-4
            text-xl shadow md:w-[420px] hover:bg-[#f6121d]`}
-            disabled={!selectedPlan || isBillingLoading} onClick={()=>handleSubscription()}>
+             onClick={()=>handleSubscription()}>
               {
                 isBillingLoading ? (
                   <Loader color="dark:fill-gray-300" />

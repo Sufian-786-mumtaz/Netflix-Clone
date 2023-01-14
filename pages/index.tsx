@@ -32,7 +32,7 @@ const Home = ({
   products}:any) => {  
     const {loading} = useAuth()
     const showModal = useSelector((state:RootState) => state.modal.Modal)
-    const subscription = true
+    const subscription = false
     if(loading || subscription ===null) return null
     if(!subscription) return <Plans products={products}/>
   return (
@@ -79,10 +79,13 @@ export const getServerSideProps = async () => {
       fetch(requests.fetchRomanceMovies).then((res)=>res.json()),
       fetch(requests.fetchDocumentaries).then((res)=>res.json()),
     ])
-    const stripe = new Stripe(process.env.Stirpe_Secret_Key)
+    const stripe = new Stripe(process.env.Stirpe_Secret_Key!,{
+      apiVersion: "2022-11-15",
+    });
     const data = await stripe.products.list({
       limit:3
     })
+
     return{
       props:{
         netflixOriginal: netflixOriginal.results,
