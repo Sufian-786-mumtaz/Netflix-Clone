@@ -32,7 +32,7 @@ const Home = ({
   products}:any) => {  
     const {loading} = useAuth()
     const showModal = useSelector((state:RootState) => state.modal.Modal)
-    const subscription = false
+    const subscription = true
     if(loading || subscription ===null) return null
     if(!subscription) return <Plans products={products}/>
   return (
@@ -85,7 +85,8 @@ export const getServerSideProps = async () => {
     const data = await stripe.products.list({
       limit:3
     })
-
+    
+    
     return{
       props:{
         netflixOriginal: netflixOriginal.results,

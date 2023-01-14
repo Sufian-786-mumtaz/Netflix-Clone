@@ -31,6 +31,11 @@ const Plans = ({products}:any) => {
         })
       });
       if (response.status === 500) return
+      if (response.status === 200){
+        dispatch(setSubscription())
+        console.log("set the statys");
+        
+      }
         const data = await response.json()
         router.push(data.url)
         setIsBillingLoading(false)

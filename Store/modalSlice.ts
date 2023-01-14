@@ -21,11 +21,7 @@ const ModalSlice = createSlice({
             state.movie = action.payload
         },
         setSubscription: (state) =>{
-            if(state.user === null){
-                state.subsciption = false
-            }else{
-                state.subsciption = true
-            }
+            state.subsciption = true
         },
         loginUser: (state, action) =>{
             state.user = action.payload

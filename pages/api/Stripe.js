@@ -1,7 +1,10 @@
 import Stripe from "stripe";
+
 const stripe =  new Stripe(process.env.Stirpe_Secret_Key)
 
+
 export default async function StripeHandler(req,res){
+   
     if(req.method === "POST"){
         const {index} = req.body;
             const prices = await stripe.prices.list({
@@ -21,9 +24,12 @@ export default async function StripeHandler(req,res){
                 cancel_url: `${req.headers.origin}/cancle`,
             }) 
             res.json({url: session.url})
+            console.log(session);
+            
     }
     else{
         res.setHeader("Allow", "POST")
         res.status(405).end("Method not allowed")
     }
 }
+

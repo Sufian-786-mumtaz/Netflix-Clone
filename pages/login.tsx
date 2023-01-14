@@ -5,7 +5,6 @@ import {useState} from "react"
 import { useForm } from "react-hook-form"
 import { SubmitHandler } from "react-hook-form/dist/types"
 import useAuth from "../hooks/useAuth"
-import Stripe from "stripe"
 import { loginUser } from "../Store/modalSlice"
 import { useDispatch } from "react-redux"
 interface Input  {
@@ -66,17 +65,5 @@ const Login = ({products}:any) => {
       </form>
     </div>
   )
-}
-export const getServerSideProps = async() =>{
-  const stripe = new Stripe(process.env.Stirpe_Secret_Key)
-  const data = await stripe.products.list({
-    limit:3
-  })
-  console.log(JSON.stringify(data))
-  return{
-    props:{
-      products:data
-    }
-  }
 }
 export default Login
